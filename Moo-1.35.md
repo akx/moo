@@ -108,9 +108,10 @@ BASIC interpreter.
 The stack is a new feature in Moo 1.3. The stack is a further variable
 storage space with easy functionality to push and pop data. (Using all
 of the 256-item stack and 5 full strings in addition to normal variables
-allows 164122 variables, so you're not really running out there.)
+allows 164122 variables, so you\'re not really running out there.)
 
-## Commands
+Commands
+--------
 
 Parameters marked with an asterisk (\*) must be terminated with a
 bracket \]. Unbracketed strings are continued until 500 characters,
@@ -229,9 +230,7 @@ register.
 
 **NB: All string commands are subcommands of the S command. Example:**
 
-```
 S=TEST\]ST\$\]
-```
 
 #### = - Push literal to string register
 
@@ -469,6 +468,30 @@ position if no % operations are done. The callstack length can be
 modified with (%\$-1\])% or similar code (see Metavariables). This
 operation makes label-based looping faster than repeated gotos.
 
+### Graphics commands (1.35)
+
+Moo supports one graphics mode, namely the 0x12 mode (640x480x16).
+
+#### GG -- Go to graphics mode
+
+This command switches to graphics mode.
+
+#### GT -- Go to text mode
+
+This command switches back to text mode.
+
+#### G\> - Put Pixel
+
+Parameters: x, y, color
+
+Sets the color of the specified pixel.
+
+#### G\< - Get Pixel
+
+Parameters: x,y
+
+Reads the color of the specified pixel to the work register.
+
 Example programs
 ----------------
 
@@ -630,19 +653,59 @@ $-1]    %.
 +$=0]v                %R
 #@   #1               +$<0]`32
                       \
-                      
+```
+
+### The Fern IFS fractal in Moo (1.35+)
+
+It\'s not terribly fast or anything.
+
+```
+v
+GG
+$=0]         @B     @C
+S}$A0]$=0.85]$=0.2] $=-.15]
+S}$A0]S}$B0] S}$C0] S}$D0]
+S}$A0]$=0.04]$=-.26]$=0.28]
+$=.16]S}$B0] S}$C0] S}$D0]
+S}$A0]$=-.04]$=0.23]$=0.26]
+$=0]  S}$B0] S}$C0] S}$D0]
+S}$A0]$=0.85]$=0.22]$=0.24]
+S}$A0]S}$B0] S}$C0] S}$D0]
+ï79   $=0]   $=0]   $=0]
+      S}$B0] S}$C0] S}$D0]
+      $=1.6] $=1.6] $=0.44]
+      S}$B0] S}$C0] S}$D0]
+@@    #B     #C     <<
+$=r]     @D(C)A(D)B,81
+x$<.01]S(Av$=2]G>EF$v
+x$<.86]S(Bv         xk>0]!
+x$<.93]S(Cv         #@
+>      S(Dv
+@X     @Y <<
+S{$1]  S{$9]
+$*A]   $*A]
+]      ]
+S{$5]  S{$13]
+$*B]   $*B]
+]      ]
+S{$17] S{$21]
+$+[]   $+[]
+$+[]   $+[]
+)C     )D
+$*35]  $*-35]
+$+320] $+400]
+)E     )F
+#Y     >#D
 ```
 
 Enlightened thoughts about Moo.
 -------------------------------
 
--   Breakage occurs. Don\'t hack.
-
--   Hacking occurs. Causes breakage.
+-   Hacking always causes breakage.
 
 -   You can\'t go back to your old creations. Trust me.
 
--   Concentrate.
+-   Concentrate while coding, and you\'ll make far less mistakes.
 
 -   You should fill all empty space with filler characters. It\'s more
     fun to read then.
@@ -655,20 +718,18 @@ Revision History
 ----------------
 
 -   1.1 (11 April 2005)
-
-  -   First public release
+    -   First public release
 
 -   1.2 (1 May 2005)
-
-  -   Added strings
-
-  -   Added timer
-
-  -   Added file i/o (yes, you read that right)
-
-  -   Added numeric \<-\> string conversion (combined with file io this is
-    persistent variables)
+    -   Added strings
+    -   Added timer
+    -   Added file i/o (yes, you read that right)
+    -   Added numeric \<-\> string conversion (combined with file io this is
+        persistent variables)
 
 -   1.3 (5 May 2005)
+    -   Added stack (yes, this means that function calls are now available.)
 
-  -   Added stack (yes, this means that function calls are coming.)
+-   1.35 (8 May 2005)
+    -   Fixed bugs with num/string conversion and stack.
+    -   Added preliminary graphics functions.
